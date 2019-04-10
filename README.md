@@ -1,0 +1,1 @@
+Java console application outputs n x m chess board cell combinations to allocate k non-attacking figures
