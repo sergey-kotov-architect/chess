@@ -17,11 +17,11 @@ public final class Combination {
     }
 
     public Set<Cell> newCells() {
-        return Cell.cellPool.stream().filter(c -> !cells.contains(c)).collect(Collectors.toSet());
+        return Cell.getCellPool().stream().filter(c -> !cells.contains(c)).collect(Collectors.toSet());
     }
 
     public void offer(Cell cell, Figure figure) {
-        if (cells.stream().allMatch(c -> c.isValid(cell, figure))) {
+        if (cells.stream().allMatch(c -> c.validate(cell, figure))) {
             cells.add(cell);
         }
     }

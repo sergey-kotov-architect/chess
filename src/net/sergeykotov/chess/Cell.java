@@ -6,7 +6,7 @@ import java.util.Objects;
 import java.util.Set;
 
 public final class Cell {
-    public static Set<Cell> cellPool;
+    private static Set<Cell> cellPool;
 
     public static void initializeCellPool(int xDimension, int yDimension) {
         Set<Cell> cells = new HashSet<>(xDimension * yDimension * 2);
@@ -18,6 +18,10 @@ public final class Cell {
         cellPool = Collections.unmodifiableSet(cells);
     }
 
+    public static Set<Cell> getCellPool() {
+        return cellPool;
+    }
+
     private final int x;
     private final int y;
 
@@ -26,17 +30,22 @@ public final class Cell {
         this.y = y;
     }
 
-    public boolean isValid(Cell cell, Figure figure) {
+    public boolean validate(Cell cell, Figure figure) {
         int dx = Math.abs(x - cell.x);
         int dy = Math.abs(y - cell.y);
         switch (figure) {
-            case QUEEN: return x != cell.x && y != cell.y && dx != dy;
-            case KING: return dx > 1 && dy > 1;
-            case ROOK: return x != cell.x && y != cell.y;
-            case BISHOP: return dx != dy;
-            case KNIGHT: return (dx != 1 || dy != 2) && (dx != 2 || dy != 1);
+            case QUEEN:
+                return x != cell.x && y != cell.y && dx != dy;
+            case KING:
+                return dx > 1 && dy > 1;
+            case ROOK:
+                return x != cell.x && y != cell.y;
+            case BISHOP:
+                return dx != dy;
+            case KNIGHT:
+                return (dx != 1 || dy != 2) && (dx != 2 || dy != 1);
             default: {
-                String message = "failed to verify cell pair [" + this + ", " + cell + "]: unknown figure " + figure;
+                String message = "failed to validate cell pair [" + this + ", " + cell + "]: unknown figure " + figure;
                 throw new UnsupportedOperationException(message);
             }
         }

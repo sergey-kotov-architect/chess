@@ -15,7 +15,7 @@ public final class Chess {
 
     private static Set<Combination> getCombinations(Figure figure) {
         Set<Combination> combinations = new HashSet<>();
-        for (Cell cell : Cell.cellPool) {
+        for (Cell cell : Cell.getCellPool()) {
             combinations.add(new Combination(cell));
         }
         for (int i = 1; i < FIGURE_COUNT; i++) {
