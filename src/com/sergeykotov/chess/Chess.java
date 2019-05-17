@@ -35,7 +35,27 @@ public final class Chess {
     }
 
     private static String view(Set<Combination> combinations) {
-        return combinations.stream().map(Objects::toString).reduce((c1, c2) -> c1 + System.lineSeparator() + c2).orElse("");
+        return combinations.stream().
+                map(Objects::toString).
+                reduce((c1, c2) -> c1 + System.lineSeparator() + c2).orElse("");
+    }
+
+    private static String visualise(Combination combination) {
+        StringBuilder cells = new StringBuilder(combination + System.lineSeparator());
+        for (int y = 0; y < Y_DIMENSION; y++) {
+            for (int x = 0; x < X_DIMENSION; x++) {
+                String cell = combination.contains(x, y) ? "1 " : "0 ";
+                cells.append(cell);
+            }
+            cells.append(System.lineSeparator());
+        }
+        return cells.toString();
+    }
+
+    public static String visualise(Set<Combination> combinations) {
+        return combinations.stream().
+                map(Chess::visualise).
+                reduce((c1, c2) -> c1 + System.lineSeparator() + c2).orElse("");
     }
 
     public static void main(String[] args) {
@@ -47,6 +67,7 @@ public final class Chess {
         String view = view(combinations);
         String format = "there are %d %d x %d chess board cell combinations to allocate %d non-attacking %s:%s%s";
         String output = String.format(format, count, X_DIMENSION, Y_DIMENSION, FIGURE_COUNT, figures, newLine, view);
+        output += newLine + newLine + visualise(combinations);
         System.out.println(output);
     }
 }

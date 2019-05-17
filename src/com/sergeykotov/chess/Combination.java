@@ -30,6 +30,10 @@ public final class Combination {
         return cells.size();
     }
 
+    public boolean contains(int x, int y) {
+        return cells.stream().anyMatch(c -> c.getX() == x && c.getY() == y);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
