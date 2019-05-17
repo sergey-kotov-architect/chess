@@ -4,20 +4,6 @@ Java console application outputs n x m chess board cell combinations to allocate
 searching combinations...  
 there are 13 3 x 2 chess board cell combinations to allocate 2 non-attacking knights:  
 [(1, 0), (0, 0)]  
-[(1, 0), (1, 1)]  
-[(2, 1), (1, 1)]  
-[(0, 0), (1, 1)]  
-[(1, 0), (0, 1)]  
-[(2, 1), (0, 1)]  
-[(0, 0), (0, 1)]  
-[(1, 1), (0, 1)]  
-[(1, 0), (2, 0)]  
-[(2, 1), (2, 0)]  
-[(0, 0), (2, 0)]  
-[(1, 1), (2, 0)]  
-[(1, 0), (2, 1)]  
-
-[(1, 0), (0, 0)]  
 1 1 0  
 0 0 0  
 

@@ -34,12 +34,6 @@ public final class Chess {
         return combinations.stream().filter(c -> c.size() == FIGURE_COUNT).collect(Collectors.toSet());
     }
 
-    private static String view(Set<Combination> combinations) {
-        return combinations.stream().
-                map(Objects::toString).
-                reduce((c1, c2) -> c1 + System.lineSeparator() + c2).orElse("");
-    }
-
     private static String visualise(Combination combination) {
         StringBuilder cells = new StringBuilder(combination + System.lineSeparator());
         for (int y = 0; y < Y_DIMENSION; y++) {
@@ -64,10 +58,9 @@ public final class Chess {
         int count = combinations.size();
         String figures = FIGURE.toString().toLowerCase() + "s";
         String newLine = System.lineSeparator();
-        String view = view(combinations);
+        String view = visualise(combinations);
         String format = "there are %d %d x %d chess board cell combinations to allocate %d non-attacking %s:%s%s";
         String output = String.format(format, count, X_DIMENSION, Y_DIMENSION, FIGURE_COUNT, figures, newLine, view);
-        output += newLine + newLine + visualise(combinations);
         System.out.println(output);
     }
 }
