@@ -2,7 +2,7 @@ Java console application outputs n x m chess board cell combinations to allocate
 
 ### Output sample
 searching combinations...
-there are 92 8 x 8 chess board cell combinations to allocate 8 non-attacking queens:
+there are 92 8 x 8 chess board cell combinations to allocate 8 non-attacking queens:  
 [(4, 3), (1, 2), (5, 7), (2, 6), (0, 5), (6, 0), (7, 4), (3, 1)]  
 [(3, 2), (1, 1), (4, 5), (5, 7), (0, 3), (2, 6), (6, 0), (7, 4)]  
 [(7, 6), (1, 2), (3, 5), (4, 7), (0, 4), (5, 1), (6, 3), (2, 0)]  
