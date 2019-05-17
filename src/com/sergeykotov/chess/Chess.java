@@ -6,10 +6,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public final class Chess {
-    private static final int X_DIMENSION = 8;
-    private static final int Y_DIMENSION = 8;
-    private static final int FIGURE_COUNT = 8;
-    private static final Figure FIGURE = Figure.QUEEN;
+    private static final int X_DIMENSION = 3;
+    private static final int Y_DIMENSION = 2;
+    private static final int FIGURE_COUNT = 2;
+    private static final Figure FIGURE = Figure.KNIGHT;
 
     static {
         Cell.initializeCellPool(X_DIMENSION, Y_DIMENSION);
