@@ -1,6 +1,7 @@
-package net.sergeykotov.chess;
+package com.sergeykotov.chess;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -8,12 +9,13 @@ public final class Chess {
     private static final int X_DIMENSION = 8;
     private static final int Y_DIMENSION = 8;
     private static final int FIGURE_COUNT = 8;
+    private static final Figure FIGURE = Figure.QUEEN;
 
     static {
         Cell.initializeCellPool(X_DIMENSION, Y_DIMENSION);
     }
 
-    private static Set<Combination> getCombinations(Figure figure) {
+    private static Set<Combination> getCombinations() {
         Set<Combination> combinations = new HashSet<>();
         for (Cell cell : Cell.getCellPool()) {
             combinations.add(new Combination(cell));
@@ -24,7 +26,7 @@ public final class Chess {
             for (Combination currentCombination : currentCombinations) {
                 for (Cell cell : currentCombination.newCells()) {
                     Combination combination = new Combination(currentCombination);
-                    combination.offer(cell, figure);
+                    combination.offer(cell, FIGURE);
                     combinations.add(combination);
                 }
             }
@@ -32,11 +34,19 @@ public final class Chess {
         return combinations.stream().filter(c -> c.size() == FIGURE_COUNT).collect(Collectors.toSet());
     }
 
+    private static String view(Set<Combination> combinations) {
+        return combinations.stream().map(Objects::toString).reduce((c1, c2) -> c1 + System.lineSeparator() + c2).orElse("");
+    }
+
     public static void main(String[] args) {
-        for (Figure figure : Figure.values()) {
-            Set<Combination> combinations = getCombinations(figure);
-            String output = figure + " " + combinations.size() + " combinations " + combinations;
-            System.out.println(output);
-        }
+        System.out.println("searching combinations...");
+        Set<Combination> combinations = getCombinations();
+        int count = combinations.size();
+        String figures = FIGURE.toString().toLowerCase() + "s";
+        String newLine = System.lineSeparator();
+        String view = view(combinations);
+        String format = "there are %d %d x %d chess board cell combinations to allocate %d non-attacking %s:%s%s";
+        String output = String.format(format, count, X_DIMENSION, Y_DIMENSION, FIGURE_COUNT, figures, newLine, view);
+        System.out.println(output);
     }
 }

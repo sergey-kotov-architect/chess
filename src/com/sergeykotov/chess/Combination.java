@@ -1,4 +1,4 @@
-package net.sergeykotov.chess;
+package com.sergeykotov.chess;
 
 import java.util.HashSet;
 import java.util.Objects;
