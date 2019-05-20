@@ -35,7 +35,7 @@ public final class Chess {
 
     private static String visualise(Combination combination) {
         StringBuilder cells = new StringBuilder(combination + System.lineSeparator());
-        for (int y = 0; y < Y_DIMENSION; y++) {
+        for (int y = Y_DIMENSION - 1; y >= 0; y--) {
             for (int x = 0; x < X_DIMENSION; x++) {
                 String cell = combination.contains(x, y) ? "1 " : "0 ";
                 cells.append(cell);
