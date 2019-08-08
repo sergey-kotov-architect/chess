@@ -43,7 +43,7 @@ public final class Chess {
         return cells.toString();
     }
 
-    public static String visualise(Set<Combination> combinations) {
+    private static String visualise(Set<Combination> combinations) {
         return combinations.stream()
                 .map(Chess::visualise)
                 .reduce((c1, c2) -> c1 + System.lineSeparator() + c2)
