@@ -1,20 +1,24 @@
 package com.sergeykotov.chess;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public final class Combination {
-    private final Set<Cell> cells = new HashSet<>();
+    private final Set<Cell> cells;
 
     public Combination(Cell cell) {
-        cells.add(cell);
+        Set<Cell> cellSet = new HashSet<>();
+        cellSet.add(cell);
+        cells = Collections.unmodifiableSet(cellSet);
     }
 
     public Combination(Combination combination, Cell cell) {
-        cells.addAll(combination.cells);
-        cells.add(cell);
+        Set<Cell> cellSet = new HashSet<>(combination.cells);
+        cellSet.add(cell);
+        cells = Collections.unmodifiableSet(cellSet);
     }
 
     public Set<Cell> newCells() {
