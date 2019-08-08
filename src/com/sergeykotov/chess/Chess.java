@@ -15,22 +15,20 @@ public final class Chess {
     }
 
     private static Set<Combination> getCombinations() {
-        Set<Combination> combinations = new HashSet<>();
-        for (Cell cell : Cell.getCellPool()) {
-            combinations.add(new Combination(cell));
-        }
+        Set<Combination> combinations = Cell.getCellPool().stream().map(Combination::new).collect(Collectors.toSet());
         for (int i = 1; i < FIGURE_COUNT; i++) {
             Set<Combination> currentCombinations = new HashSet<>(combinations);
             combinations.clear();
             for (Combination currentCombination : currentCombinations) {
-                for (Cell cell : currentCombination.newCells()) {
-                    Combination combination = new Combination(currentCombination);
-                    combination.offer(cell, FIGURE);
-                    combinations.add(combination);
+                for (Cell newCell : currentCombination.newCells()) {
+                    if (currentCombination.validate(newCell, FIGURE)) {
+                        Combination combination = new Combination(currentCombination, newCell);
+                        combinations.add(combination);
+                    }
                 }
             }
         }
-        return combinations.stream().filter(c -> c.size() == FIGURE_COUNT).collect(Collectors.toSet());
+        return combinations;
     }
 
     private static String visualise(Combination combination) {
@@ -46,20 +44,23 @@ public final class Chess {
     }
 
     public static String visualise(Set<Combination> combinations) {
-        return combinations.stream().
-                map(Chess::visualise).
-                reduce((c1, c2) -> c1 + System.lineSeparator() + c2).orElse("");
+        return combinations.stream()
+                .map(Chess::visualise)
+                .reduce((c1, c2) -> c1 + System.lineSeparator() + c2)
+                .orElse("");
     }
 
     public static void main(String[] args) {
-        System.out.println("searching combinations...");
-        Set<Combination> combinations = getCombinations();
-        int count = combinations.size();
+        String format = "searching %d x %d chess board cell combinations to allocate %d non-attacking %s...";
         String figures = FIGURE.toString().toLowerCase() + "s";
-        String newLine = System.lineSeparator();
-        String view = visualise(combinations);
-        String format = "there are %d %d x %d chess board cell combinations to allocate %d non-attacking %s:%s%s";
-        String output = String.format(format, count, X_DIMENSION, Y_DIMENSION, FIGURE_COUNT, figures, newLine, view);
+        String output = String.format(format, X_DIMENSION, Y_DIMENSION, FIGURE_COUNT, figures);
         System.out.println(output);
+        long startTime = System.currentTimeMillis();
+
+        Set<Combination> combinations = getCombinations();
+
+        long elapsedTime = System.currentTimeMillis() - startTime;
+        System.out.println(combinations.size() + " combinations have been found in " + elapsedTime + " milliseconds");
+        System.out.println(visualise(combinations));
     }
 }

@@ -1,8 +1,8 @@
 Java console application outputs n x m chess board cell combinations to allocate k non-attacking figures
 
-### Output samples
-searching combinations...  
-there are 13 3 x 2 chess board cell combinations to allocate 2 non-attacking knights:  
+### Output examples
+searching 3 x 2 chess board cell combinations to allocate 2 non-attacking knights...
+13 combinations have been found in 126 milliseconds  
 [(1, 0), (0, 0)]  
 0 0 0  
 1 1 0  

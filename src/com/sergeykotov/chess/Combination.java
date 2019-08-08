@@ -12,22 +12,17 @@ public final class Combination {
         cells.add(cell);
     }
 
-    public Combination(Combination combination) {
+    public Combination(Combination combination, Cell cell) {
         cells.addAll(combination.cells);
+        cells.add(cell);
     }
 
     public Set<Cell> newCells() {
         return Cell.getCellPool().stream().filter(c -> !cells.contains(c)).collect(Collectors.toSet());
     }
 
-    public void offer(Cell cell, Figure figure) {
-        if (cells.stream().allMatch(c -> c.validate(cell, figure))) {
-            cells.add(cell);
-        }
-    }
-
-    public int size() {
-        return cells.size();
+    public boolean validate(Cell cell, Figure figure) {
+        return cells.stream().allMatch(c -> c.validate(cell, figure));
     }
 
     public boolean contains(int x, int y) {
