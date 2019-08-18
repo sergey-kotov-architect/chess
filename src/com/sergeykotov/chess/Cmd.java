@@ -4,9 +4,9 @@ import java.util.Arrays;
 
 public enum Cmd {
     CALC("n m k figure f - find n x m chess board cell combinations to allocate k non-attacking figures f",
-            "\\s*\\d+\\s+\\d+\\s+\\d+\\s+[a-z]+\\s*"),
-    EXPORT("export - create a txt-file in the current folder with last calculation result", "\\s*export\\s*"),
-    EXIT("exit - close the program", "\\s*exit\\s*");
+            "\\d+\\s+\\d+\\s+\\d+\\s+[a-z]+"),
+    EXPORT("export - create a txt-file in the current folder with last calculation result", "export"),
+    EXIT("exit - close the program", "exit");
 
     private final String description;
     private final String regexp;

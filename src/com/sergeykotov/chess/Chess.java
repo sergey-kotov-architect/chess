@@ -116,6 +116,6 @@ public final class Chess {
         do {
             System.out.println(Cmd.getCommands());
             input = inputStream.nextLine();
-        } while (parseInput(input.toLowerCase()));
+        } while (parseInput(input.toLowerCase().trim()));
     }
 }
