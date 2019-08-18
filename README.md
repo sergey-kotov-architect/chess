@@ -67,6 +67,4 @@ calculation result has been exported to txt-file /Users/kotovsergey/Documents/ch
 n m k figure f - find n x m chess board cell combinations to allocate k non-attacking figures f  
 export - create a txt-file in the current folder with last calculation result  
 exit - close the program  
-exit  
-
-Process finished with exit code 0
+exit
