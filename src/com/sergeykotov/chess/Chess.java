@@ -74,7 +74,7 @@ public final class Chess {
         int xDimension = Integer.valueOf(values[0]);
         int yDimension = Integer.valueOf(values[1]);
         int figureCount = Integer.valueOf(values[2]);
-        Figure figure = Figure.valueOf(values[3].toUpperCase());
+        Figure figure = Figure.valueOf(values[3]);
         calculate(xDimension, yDimension, figureCount, figure);
     }
 
@@ -116,6 +116,6 @@ public final class Chess {
         do {
             System.out.println(Cmd.getCommands());
             input = inputStream.nextLine();
-        } while (parseInput(input.toLowerCase().trim()));
+        } while (parseInput(input.toUpperCase().trim()));
     }
 }
