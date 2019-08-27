@@ -15,12 +15,13 @@ public final class Chess {
         int xDimension = Integer.valueOf(values[0]);
         int yDimension = Integer.valueOf(values[1]);
         int figureCount = Integer.valueOf(values[2]);
-        Figure figure = Figure.valueOf(values[3]);
+        Figure figure = Figure.valueOf(values[3]); //TODO: consider catching IllegalArgumentException
         Calculation.calculate(xDimension, yDimension, figureCount, figure);
     }
 
     private static void export() {
-        if (Calculation.calculationResult == null) {
+        String calculationResult = Calculation.getCalculationResult();
+        if (calculationResult == null) {
             System.out.println("there is no calculation result to export");
             return;
         }
@@ -28,7 +29,7 @@ public final class Chess {
         String folder = Paths.get("").toAbsolutePath().toString();
         Path path = Paths.get(folder + File.separator + file);
         try (BufferedWriter writer = Files.newBufferedWriter(path, Charset.forName("UTF-8"))) {
-            writer.write(Calculation.calculationResult);
+            writer.write(calculationResult);
         } catch (IOException e) {
             System.out.println("failed to export calculation result to txt-file: " + e.getMessage());
             e.printStackTrace();
@@ -37,6 +38,7 @@ public final class Chess {
         System.out.println("calculation result has been exported to txt-file " + path.toString());
     }
 
+    //TODO: consider implementing Chain of Responsibility design pattern
     private static boolean parseInput(String input) {
         if (input.matches(Cmd.EXIT.getRegexp())) {
             return false;
