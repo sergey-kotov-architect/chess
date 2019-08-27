@@ -1,11 +1,11 @@
 package com.sergeykotov.chess;
 
 public enum Figure {
-    QUEEN((Cell cell1, Cell cell2, int dx, int dy) -> cell1.getX() != cell2.getX() && cell1.getY() != cell2.getY() && dx != dy),
-    KING((Cell cell1, Cell cell2, int dx, int dy) -> dx > 1 && dy > 1),
-    ROOK((Cell cell1, Cell cell2, int dx, int dy) -> cell1.getX() != cell2.getX() && cell2.getY() != cell2.getY()),
-    BISHOP((Cell cell1, Cell cell2, int dx, int dy) -> dx != dy),
-    KNIGHT((Cell cell1, Cell cell2, int dx, int dy) -> (dx != 1 || dy != 2) && (dx != 2 || dy != 1));
+    QUEEN((CellPair c) -> c.cell1.getX() != c.cell2.getX() && c.cell1.getY() != c.cell2.getY() && c.dx != c.dy),
+    KING((CellPair c) -> c.dx > 1 && c.dy > 1),
+    ROOK((CellPair c) -> c.cell1.getX() != c.cell2.getX() && c.cell2.getY() != c.cell2.getY()),
+    BISHOP((CellPair c) -> c.dx != c.dy),
+    KNIGHT((CellPair c) -> (c.dx != 1 || c.dy != 2) && (c.dx != 2 || c.dy != 1));
 
     private Validatable validatable;
 
@@ -32,6 +32,6 @@ public enum Figure {
     public boolean validate(Cell cell1, Cell cell2) {
         int dx = Math.abs(cell1.getX() - cell2.getX());
         int dy = Math.abs(cell1.getY() - cell2.getY());
-        return validatable.validate(cell1, cell2, dx, dy);
+        return validatable.validate(new CellPair(cell1, cell2, dx, dy));
     }
 }
