@@ -16,7 +16,8 @@ public final class Chess {
         int yDimension = Integer.valueOf(values[1]);
         int figureCount = Integer.valueOf(values[2]);
         Figure figure = Figure.valueOf(values[3]); //TODO: consider catching IllegalArgumentException
-        Calculation.calculate(xDimension, yDimension, figureCount, figure);
+        Calculation calculation = new Calculation(xDimension, yDimension, figureCount, figure);
+        calculation.calculate();
     }
 
     private static void export() {
