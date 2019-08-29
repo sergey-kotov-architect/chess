@@ -10,11 +10,35 @@ import java.nio.file.Paths;
 import java.util.Scanner;
 
 public final class Chess {
+    public static void main(String[] args) {
+        Scanner inputStream = new Scanner(System.in);
+        String input;
+        do {
+            System.out.println(Cmd.getCommands());
+            input = inputStream.nextLine();
+        } while (parseInput(input.toUpperCase().trim()));
+    }
+
+    //TODO: consider implementing Chain of Responsibility Design Pattern
+    private static boolean parseInput(String input) {
+        if (input.matches(Cmd.EXIT.getRegexp())) {
+            return false;
+        }
+        if (input.matches(Cmd.CALC.getRegexp())) {
+            calculate(input);
+        } else if (input.matches(Cmd.EXPORT.getRegexp())) {
+            export();
+        } else {
+            System.out.println("command not found");
+        }
+        return true;
+    }
+
     private static void calculate(String input) {
         String[] values = input.split("\\s+");
-        int xDimension = Integer.valueOf(values[0]);
-        int yDimension = Integer.valueOf(values[1]);
-        int figureCount = Integer.valueOf(values[2]);
+        int xDimension = Integer.parseInt(values[0]);
+        int yDimension = Integer.parseInt(values[1]);
+        int figureCount = Integer.parseInt(values[2]);
         Figure figure = Figure.valueOf(values[3]); //TODO: consider catching IllegalArgumentException
         Calculation calculation = new Calculation(xDimension, yDimension, figureCount, figure);
         calculation.calculate();
@@ -37,29 +61,5 @@ public final class Chess {
             return;
         }
         System.out.println("calculation result has been exported to txt-file " + path.toString());
-    }
-
-    //TODO: consider implementing Chain of Responsibility design pattern
-    private static boolean parseInput(String input) {
-        if (input.matches(Cmd.EXIT.getRegexp())) {
-            return false;
-        }
-        if (input.matches(Cmd.CALC.getRegexp())) {
-            calculate(input);
-        } else if (input.matches(Cmd.EXPORT.getRegexp())) {
-            export();
-        } else {
-            System.out.println("command not found");
-        }
-        return true;
-    }
-
-    public static void main(String[] args) {
-        Scanner inputStream = new Scanner(System.in);
-        String input;
-        do {
-            System.out.println(Cmd.getCommands());
-            input = inputStream.nextLine();
-        } while (parseInput(input.toUpperCase().trim()));
     }
 }

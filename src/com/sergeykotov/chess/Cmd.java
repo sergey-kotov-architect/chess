@@ -3,18 +3,13 @@ package com.sergeykotov.chess;
 import java.util.Arrays;
 
 public enum Cmd {
-    CALC("n m k figure f - find n x m chess board cell combinations to allocate k non-attacking figures f",
+    CALC("n m k f - find n x m chess board cell combinations to allocate k non-attacking figures f",
             "\\d+\\s+\\d+\\s+\\d+\\s+[A-Z]+"),
     EXPORT("export - create a txt-file in the current folder with last calculation result", "EXPORT"),
     EXIT("exit - close the program", "EXIT");
 
-    private final String description;
-    private final String regexp;
-
-    private static final String commands = Arrays.stream(Cmd.values())
-            .map(Cmd::getDescription)
-            .reduce((c1, c2) -> c1 + System.lineSeparator() + c2)
-            .orElse("");
+    private String description;
+    private String regexp;
 
     Cmd(String description, String regexp) {
         this.description = description;
@@ -30,6 +25,9 @@ public enum Cmd {
     }
 
     public static String getCommands() {
-        return commands;
+        return Arrays.stream(Cmd.values())
+                .map(Cmd::getDescription)
+                .reduce((c1, c2) -> c1 + System.lineSeparator() + c2)
+                .orElse("");
     }
 }
