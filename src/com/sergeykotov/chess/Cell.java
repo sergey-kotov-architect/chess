@@ -30,27 +30,6 @@ public final class Cell {
         this.y = y;
     }
 
-    public boolean validate(Cell cell, Figure figure) {
-        int dx = Math.abs(x - cell.x);
-        int dy = Math.abs(y - cell.y);
-        switch (figure) {
-            case QUEEN:
-                return x != cell.x && y != cell.y && dx != dy;
-            case KING:
-                return dx > 1 && dy > 1;
-            case ROOK:
-                return x != cell.x && y != cell.y;
-            case BISHOP:
-                return dx != dy;
-            case KNIGHT:
-                return (dx != 1 || dy != 2) && (dx != 2 || dy != 1);
-            default: {
-                String message = "failed to validate cell pair [" + this + ", " + cell + "]: unknown figure " + figure;
-                throw new UnsupportedOperationException(message);
-            }
-        }
-    }
-
     public int getX() {
         return x;
     }

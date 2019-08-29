@@ -26,7 +26,7 @@ public final class Combination {
     }
 
     public boolean validate(Cell cell, Figure figure) {
-        return cells.stream().allMatch(c -> c.validate(cell, figure));
+        return cells.stream().allMatch(c -> figure.validate(c, cell));
     }
 
     public boolean contains(int x, int y) {

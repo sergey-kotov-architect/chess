@@ -1,66 +1,65 @@
 package com.sergeykotov.chess;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.Charset;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Scanner;
 
 public final class Chess {
-    private static final int X_DIMENSION = 3;
-    private static final int Y_DIMENSION = 2;
-    private static final int FIGURE_COUNT = 2;
-    private static final Figure FIGURE = Figure.KNIGHT;
-
-    static {
-        Cell.initializeCellPool(X_DIMENSION, Y_DIMENSION);
-    }
-
-    private static Set<Combination> getCombinations() {
-        Set<Combination> combinations = Cell.getCellPool().stream().map(Combination::new).collect(Collectors.toSet());
-        for (int i = 1; i < FIGURE_COUNT; i++) {
-            Set<Combination> currentCombinations = new HashSet<>(combinations);
-            combinations.clear();
-            for (Combination currentCombination : currentCombinations) {
-                for (Cell newCell : currentCombination.newCells()) {
-                    if (currentCombination.validate(newCell, FIGURE)) {
-                        Combination combination = new Combination(currentCombination, newCell);
-                        combinations.add(combination);
-                    }
-                }
-            }
-        }
-        return combinations;
-    }
-
-    private static String visualise(Combination combination) {
-        StringBuilder cells = new StringBuilder(combination + System.lineSeparator());
-        for (int y = Y_DIMENSION - 1; y >= 0; y--) {
-            for (int x = 0; x < X_DIMENSION; x++) {
-                String cell = combination.contains(x, y) ? "1 " : "0 ";
-                cells.append(cell);
-            }
-            cells.append(System.lineSeparator());
-        }
-        return cells.toString();
-    }
-
-    private static String visualise(Set<Combination> combinations) {
-        return combinations.stream()
-                .map(Chess::visualise)
-                .reduce((c1, c2) -> c1 + System.lineSeparator() + c2)
-                .orElse("");
-    }
-
     public static void main(String[] args) {
-        String format = "searching %d x %d chess board cell combinations to allocate %d non-attacking %s...";
-        String figures = FIGURE.toString().toLowerCase() + "s";
-        String output = String.format(format, X_DIMENSION, Y_DIMENSION, FIGURE_COUNT, figures);
-        System.out.println(output);
-        long startTime = System.currentTimeMillis();
+        Scanner inputStream = new Scanner(System.in);
+        String input;
+        do {
+            System.out.println(Cmd.getCommands());
+            input = inputStream.nextLine();
+        } while (parseInput(input.toUpperCase().trim()));
+    }
 
-        Set<Combination> combinations = getCombinations();
+    //TODO: consider implementing Chain of Responsibility Design Pattern
+    private static boolean parseInput(String input) {
+        if (input.matches(Cmd.EXIT.getRegexp())) {
+            return false;
+        }
+        if (input.matches(Cmd.CALC.getRegexp())) {
+            calculate(input);
+        } else if (input.matches(Cmd.EXPORT.getRegexp())) {
+            export();
+        } else {
+            System.out.println("command not found");
+        }
+        return true;
+    }
 
-        long elapsedTime = System.currentTimeMillis() - startTime;
-        System.out.println(combinations.size() + " combinations have been found in " + elapsedTime + " milliseconds");
-        System.out.println(visualise(combinations));
+    private static void calculate(String input) {
+        String[] values = input.split("\\s+");
+        int xDimension = Integer.parseInt(values[0]);
+        int yDimension = Integer.parseInt(values[1]);
+        int figureCount = Integer.parseInt(values[2]);
+        Figure figure = Figure.valueOf(values[3]); //TODO: consider catching IllegalArgumentException
+        Calculation calculation = new Calculation(xDimension, yDimension, figureCount, figure);
+        calculation.calculate();
+    }
+
+    private static void export() {
+        String calculationResult = Calculation.getCalculationResult();
+        if (calculationResult == null) {
+            System.out.println("there is no calculation result to export");
+            return;
+        }
+        String file = "chess_calculation_result_" + System.currentTimeMillis() + ".txt";
+        String folder = Paths.get("").toAbsolutePath().toString();
+        Path path = Paths.get(folder + File.separator + file);
+        try (BufferedWriter writer = Files.newBufferedWriter(path, Charset.forName("UTF-8"))) {
+            writer.write(calculationResult);
+        } catch (IOException e) {
+            System.out.println("failed to export calculation result to txt-file: " + e.getMessage());
+            e.printStackTrace();
+            return;
+        }
+        System.out.println("calculation result has been exported to txt-file " + path.toString());
     }
 }
