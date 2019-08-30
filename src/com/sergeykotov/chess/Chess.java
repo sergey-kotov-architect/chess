@@ -11,12 +11,13 @@ import java.util.Scanner;
 
 public final class Chess {
     public static void main(String[] args) {
-        Scanner inputStream = new Scanner(System.in);
-        String input;
-        do {
-            System.out.println(Cmd.getCommands());
-            input = inputStream.nextLine();
-        } while (parseInput(input.toUpperCase().trim()));
+        try (Scanner inputStream = new Scanner(System.in)) {
+            String input;
+            do {
+                System.out.println(Cmd.getCommands());
+                input = inputStream.nextLine();
+            } while (parseInput(input.toUpperCase().trim()));
+        }
     }
 
     //TODO: consider implementing Chain of Responsibility Design Pattern
