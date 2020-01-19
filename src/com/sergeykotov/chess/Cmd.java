@@ -1,6 +1,7 @@
 package com.sergeykotov.chess;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public enum Cmd {
     CALC("n m k f - find n x m chess board cell combinations to allocate k non-attacking figures f",
@@ -27,7 +28,6 @@ public enum Cmd {
     public static String getCommands() {
         return Arrays.stream(Cmd.values())
                 .map(Cmd::getDescription)
-                .reduce((c1, c2) -> c1 + System.lineSeparator() + c2)
-                .orElse("");
+                .collect(Collectors.joining(System.lineSeparator()));
     }
 }

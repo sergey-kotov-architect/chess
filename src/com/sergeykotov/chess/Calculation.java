@@ -62,8 +62,7 @@ public final class Calculation {
     private String visualise(Set<Combination> combinations) {
         return combinations.stream()
                 .map(this::visualise)
-                .reduce((c1, c2) -> c1 + System.lineSeparator() + c2)
-                .orElse("");
+                .collect(Collectors.joining(System.lineSeparator()));
     }
 
     private String visualise(Combination combination) {
