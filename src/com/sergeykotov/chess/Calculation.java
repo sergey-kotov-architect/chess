@@ -1,14 +1,15 @@
 package com.sergeykotov.chess;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 public final class Calculation {
     private static String calculationResult;
 
-    public static String getCalculationResult() {
-        return calculationResult;
+    public static Optional<String> getCalculationResult() {
+        return calculationResult == null ? Optional.empty() : Optional.of(calculationResult);
     }
 
     private final int X_DIMENSION;

@@ -7,6 +7,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Optional;
 import java.util.Scanner;
 
 public final class Chess {
@@ -20,7 +21,6 @@ public final class Chess {
         }
     }
 
-    //TODO: consider implementing Chain of Responsibility Design Pattern
     private static boolean parseInput(String input) {
         if (input.matches(Cmd.EXIT.getRegexp())) {
             return false;
@@ -46,8 +46,8 @@ public final class Chess {
     }
 
     private static void export() {
-        String calculationResult = Calculation.getCalculationResult();
-        if (calculationResult == null) {
+        Optional<String> calculationResult = Calculation.getCalculationResult();
+        if (!calculationResult.isPresent()) {
             System.out.println("there is no calculation result to export");
             return;
         }
@@ -55,7 +55,7 @@ public final class Chess {
         String folder = Paths.get("").toAbsolutePath().toString();
         Path path = Paths.get(folder + File.separator + file);
         try (BufferedWriter writer = Files.newBufferedWriter(path, Charset.forName("UTF-8"))) {
-            writer.write(calculationResult);
+            writer.write(calculationResult.get());
         } catch (IOException e) {
             System.out.println("failed to export calculation result to txt-file: " + e.getMessage());
             e.printStackTrace();
