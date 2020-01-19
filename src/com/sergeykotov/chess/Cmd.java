@@ -4,7 +4,7 @@ import java.util.Arrays;
 
 public enum Cmd {
     CALC("n m k f - find n x m chess board cell combinations to allocate k non-attacking figures f",
-            "\\d+\\s+\\d+\\s+\\d+\\s+[A-Z]+"),
+            "\\d+\\s+\\d+\\s+\\d+\\s+(QUEEN|KING|ROOK|BISHOP|KNIGHT)"),
     EXPORT("export - create a txt-file in the current folder with last calculation result", "EXPORT"),
     EXIT("exit - close the program", "EXIT");
 

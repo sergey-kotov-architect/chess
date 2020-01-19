@@ -40,7 +40,7 @@ public final class Chess {
         int xDimension = Integer.parseInt(values[0]);
         int yDimension = Integer.parseInt(values[1]);
         int figureCount = Integer.parseInt(values[2]);
-        Figure figure = Figure.valueOf(values[3]); //TODO: consider catching IllegalArgumentException
+        Figure figure = Figure.valueOf(values[3]);
         Calculation calculation = new Calculation(xDimension, yDimension, figureCount, figure);
         calculation.calculate();
     }
